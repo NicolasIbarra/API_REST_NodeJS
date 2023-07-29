@@ -21,4 +21,15 @@ const validatorTracksModel = [
   (req, res, next) => validateResult(req, res, next),
 ];
 
-module.exports = { validatorTracksModel };
+/**
+ * Validator used for Users model.
+ */
+const validatorUsersModel = [
+  check("name").exists().notEmpty().isLength({ min: 4, max: 20 }),
+  check("age").exists().notEmpty().isNumeric(),
+  check("email").exists().notEmpty().isEmail(),
+  check("password").exists().notEmpty().isLength({ min: 3, max: 50 }),
+  (req, res, next) => validateResult(req, res, next),
+];
+
+module.exports = { validatorTracksModel, validatorUsersModel };
