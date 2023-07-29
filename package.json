@@ -1,0 +1,31 @@
+{
+  "name": "api_rest_nodejs",
+  "version": "1.0.0",
+  "description": "This project is about creating a REST API with NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NicolasIbarra/API_REST_NodeJS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NicolasIbarra/API_REST_NodeJS/issues"
+  },
+  "homepage": "https://github.com/NicolasIbarra/API_REST_NodeJS#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "mongoose": "^7.3.1",
+    "mongoose-delete": "^1.0.1",
+    "multer": "^1.4.5-lts.1"
+  }
+}
