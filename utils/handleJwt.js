@@ -1,3 +1,4 @@
+const { handleHttpError } = require("../utils/handleErrors");
 const jsonWebToken = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -9,30 +10,34 @@ const JWT_SECRET = process.env.JWT_SECRET;
  * @returns
  */
 const signToken = async (user) => {
-  const sign = await jsonWebToken.sign(
-    {
-      _id: user._id,
-      role: user.role,
-    },
-    JWT_SECRET,
-    {
-      expiresIn: "5h",
-    }
-  );
-  return sign;
+  try {
+    const sign = await jsonWebToken.sign(
+      {
+        _id: user._id,
+        role: user.role,
+      },
+      JWT_SECRET,
+      {
+        expiresIn: "5h",
+      }
+    );
+    return sign;
+  } catch (error) {
+    return "ERROR_SIGNING_TOKEN";
+  }
 };
 
 /**
  * Verifies the token.
  * The created token and a secret key are needed.
- * @param {*} jsonWebToken 
- * @returns 
+ * @param {*} jwt
+ * @returns
  */
-const verifyToken = async (jsonWebToken) => {
+const verifyToken = async (jwt) => {
   try {
-    return await jsonWebToken.verify(jsonWebToken, JWT_SECRET);
+    return await jsonWebToken.verify(jwt, JWT_SECRET);
   } catch (error) {
-    return "An error ocurred verifying the token";
+    return "ERROR_VERIFYING_TOKEN";
   }
 };
 
