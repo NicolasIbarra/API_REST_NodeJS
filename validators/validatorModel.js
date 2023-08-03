@@ -17,7 +17,7 @@ const validatorTracksModel = [
   check("duration").exists().notEmpty(),
   check("duration.start").exists().notEmpty(),
   check("duration.end").exists().notEmpty(),
-  check("mediaId").exists().notEmpty().isMongoId(),
+  check("mediaId").exists().notEmpty(),
   (req, res, next) => validateResult(req, res, next),
 ];
 

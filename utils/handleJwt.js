@@ -1,6 +1,7 @@
-const { handleHttpError } = require("../utils/handleErrors");
+const getPropertiesKey = require("../utils/handleEngineProperties");
 const jsonWebToken = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
+const propertiesKey = getPropertiesKey();
 
 /**
  * Creates a token with user information.
@@ -13,7 +14,7 @@ const signToken = async (user) => {
   try {
     const sign = await jsonWebToken.sign(
       {
-        _id: user._id,
+        [propertiesKey.id]: user[propertiesKey.id],
         role: user.role,
       },
       JWT_SECRET,

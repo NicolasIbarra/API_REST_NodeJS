@@ -18,11 +18,7 @@ const registerUser = async (req, res) => {
     const hashedPassword = await encryptPassword(req.password);
     const body = { ...req, password: hashedPassword };
     const dataUser = await usersModel.create(body);
-    const data = {
-      token: await signToken(dataUser),
-      user: dataUser,
-    };
-    res.send({ data });
+    res.send({ dataUser });
   } catch (error) {
     handleHttpError(res, "ERROR_USERS_REGISTERUSER", 404);
   }

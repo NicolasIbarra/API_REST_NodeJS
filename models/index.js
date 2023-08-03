@@ -1,8 +1,10 @@
+const DB_ENGINE = process.env.DB_ENGINE;
+const modelsType = (DB_ENGINE === "nosql") ? "./nosql" : "./mysql";
+
 const models = {
-    usersModel: require("./nosql/users"),
-    tracksModel: require("./nosql/tracks"),
-    storageModel: require("./nosql/storage"),
-  };
-  
-  module.exports = models;
-  
+  usersModel: require(`${modelsType}/users`),
+  tracksModel: require(`${modelsType}/tracks`),
+  storageModel: require(`${modelsType}/storage`),
+};
+
+module.exports = models;

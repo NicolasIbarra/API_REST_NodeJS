@@ -1,6 +1,8 @@
 const { matchedData } = require("express-validator");
 const { tracksModel } = require("../models");
 const { handleHttpError } = require("../utils/handleErrors");
+const getPropertiesKey = require("../utils/handleEngineProperties");
+const propertiesKey = getPropertiesKey();
 
 /**
  * Gets an item.
@@ -42,7 +44,7 @@ const getItems = async (req, res) => {
 const createItems = async (req, res) => {
   try {
     const body = matchedData(req);
-    const data = await tracksModel.create(body);
+    const data = await tracksModel.create(body); //Check for all CRUD controllers methods. They may change when using Sequelize for SQL DB.
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_TRACKS_CREATEITEMS", 404);
@@ -74,7 +76,7 @@ const updateItems = async (req, res) => {
 const deleteItems = async (req, res) => {
   try {
     const id = req.params.id;
-    const data = await tracksModel.delete({ _id: id });
+    const data = await tracksModel.delete({ [propertiesKey.id]: id });
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_TRACKS_DELETEITEM", 404);

@@ -13,7 +13,7 @@ const MEDIA_PATH = `${__dirname}/../storage`;
 const getFile = async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await storageModel.findById(id);
+    const data = await storageModel.findOne({id});
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_STORAGE_GETFILE", 404);
@@ -24,7 +24,7 @@ const getFile = async (req, res) => {
  * Gets a list of files.
  * @param {*} req
  * @param {*} res
- */
+*/
 const getFiles = async (req, res) => {
   try {
     const files = await storageModel.find({});
@@ -68,7 +68,7 @@ const uploadFile = async (req, res) => {
 const deleteFile = async (req, res) => {
   try {
     const { id } = matchedData(req);
-    const fileData = await storageModel.findById(id);
+    const fileData = await storageModel.findOne({id});
     await storageModel.findByIdAndDelete(id);
     const { filename } = fileData;
     const filePath = `${MEDIA_PATH}/${filename}`;

@@ -25,7 +25,7 @@ router.put("/:id", authSessionMiddleware, validatorId, validatorTracksModel, upd
  * Post a new track.
  * Only "admin" is sent as an allowed rol to execute a POST method.
  */
-router.post("/", authSessionMiddleware, checkRolMiddleware(["admin"]), validatorTracksModel, createItems);
+router.post("/", authSessionMiddleware, checkRolMiddleware(["admin","user"]), validatorTracksModel, createItems);
 
 /**
  * Delete a track
