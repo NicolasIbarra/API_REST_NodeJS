@@ -13,9 +13,10 @@ const propertiesKey = getPropertiesKey();
 const getItem = async (req, res) => {
   try {
     const id = req.params.id;
-    const data = await tracksModel.findById(id);
+    const data = await tracksModel.findOneData(id);
     res.send({ data });
   } catch (error) {
+    console.log(error)
     handleHttpError(res, "ERROR_TRACKS_GETITEM", 404);
   }
 };
@@ -27,9 +28,10 @@ const getItem = async (req, res) => {
  */
 const getItems = async (req, res) => {
   try {
-    const data = await tracksModel.find({});
+    const data = await tracksModel.findAllData();
     res.send({ data });
   } catch (error) {
+    console.log(error)
     handleHttpError(res, "ERROR_TRACKS_GETITEMS", 404);
   }
 };
