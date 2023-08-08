@@ -16,7 +16,6 @@ const getItem = async (req, res) => {
     const data = await tracksModel.findOneData(id);
     res.send({ data });
   } catch (error) {
-    console.log(error)
     handleHttpError(res, "ERROR_TRACKS_GETITEM", 404);
   }
 };
@@ -31,7 +30,6 @@ const getItems = async (req, res) => {
     const data = await tracksModel.findAllData();
     res.send({ data });
   } catch (error) {
-    console.log(error)
     handleHttpError(res, "ERROR_TRACKS_GETITEMS", 404);
   }
 };

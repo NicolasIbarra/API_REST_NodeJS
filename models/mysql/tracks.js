@@ -1,5 +1,6 @@
 const { sequelize } = require("../../config/mysql");
 const { DataTypes } = require("sequelize");
+const Storage = require("./storage");
 
 const Tracks = sequelize.define(
   "tracks",
@@ -38,5 +39,36 @@ const Tracks = sequelize.define(
     timestamps: true,
   }
 );
+
+/**
+ * Finds all the records in Storage model using mediaId field as FK,
+ * findAllData -> The name of the function. It matches the personalized NoSQL function so the controller can get both.
+ * belongsTo -> Stablishes the relation between Tracks and Storage.
+ * findAll -> Searches the records in the DB using the declared criteria.
+ * @returns
+ */
+Tracks.findAllData = function () {
+  Tracks.belongsTo(Storage, {
+    foreignKey: "mediaId",
+    as: "audio",
+  });
+
+  return Tracks.findAll({ include: "audio" });
+};
+
+/**
+ * Finds the track in Storage model using the Track's id.
+ * findOne -> Searches the records in the DB using the declared criteria.
+ * @param {*} id - Track's id
+ * @returns 
+ */
+Tracks.findOneData = function (id) {
+  Tracks.belongsTo(Storage, {
+    foreignKey: "mediaId",
+    as: "audio",
+  });
+
+  return Tracks.findOne({ where: { id }, include: "audio" });
+};
 
 module.exports = Tracks;
