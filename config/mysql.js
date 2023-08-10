@@ -6,7 +6,7 @@ const password = process.env.MYSQL_PASSWORD;
 const host = process.env.MYSQL_HOST;
 
 /**
- * Configure a new instance of DB connection.
+ * Configures a new instance of DB connection.
  */
 const sequelize = new Sequelize(database, username, password, {
   host,
@@ -14,7 +14,7 @@ const sequelize = new Sequelize(database, username, password, {
 });
 
 /**
- * Stablish the connection with MySQL DB.
+ * Establishes the connection with MySQL DB.
  */
 const connectMySQLDB = async () => {
   try {

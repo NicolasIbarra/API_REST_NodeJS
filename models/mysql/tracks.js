@@ -43,7 +43,7 @@ const Tracks = sequelize.define(
 /**
  * Finds all the records in Storage model using mediaId field as FK,
  * findAllData -> The name of the function. It matches the personalized NoSQL function so the controller can get both.
- * belongsTo -> Stablishes the relation between Tracks and Storage.
+ * belongsTo -> Establishes the relation between Tracks and Storage.
  * findAll -> Searches the records in the DB using the declared criteria.
  * @returns
  */

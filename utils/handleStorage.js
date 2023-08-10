@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 });
 
 /**
- * uploadMiddleware is a constant used to stablish communication between the route and the controller.
+ * uploadMiddleware is a constant used to establish communication between the route and the controller.
  */
 const uploadMiddleware = multer({ storage });
 
