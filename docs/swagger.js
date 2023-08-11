@@ -1,8 +1,12 @@
 const swaggerJsdoc = require("swagger-jsdoc");
 
 /**
- * Constant that has general but relevant API information.
+ * Constant that has relevant API information.
  * It's used by swaggerJsdoc() function.
+ * Info -> Overview information about the API.
+ * Servers -> Servers that Swagger will make requests to.
+ * Schemas -> Structures of models and processes.
+ * SecuritySchemes -> API authentication type.
  */
 const swaggerDefinition = {
   openapi: "3.1.0",
@@ -17,6 +21,12 @@ const swaggerDefinition = {
     },
   ],
   components:{
+    securitySchemes:{
+      bearerAuth:{
+        type:"http",
+        scheme:"bearer"
+      }
+    },
     schemas:{
       tracks:{
         type:"object",

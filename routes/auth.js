@@ -6,6 +6,23 @@ const router = express.Router();
 
 /**
  * Register a new user.
+ * @openapi
+ * /auth/register:
+ *      post:
+ *          tags:
+ *              - Auth
+ *          summary: "Register a new user"
+ *          description: "Endpoint to register a new user."
+ *          requestBody:
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: "#/components/schemas/authRegister"
+ *          responses:
+ *              '200': 
+ *                  description: User created successfully
+ *              '403': 
+ *                  description: Validation error 
  */
 router.post("/register", validatorUsersModel, registerUser);
 
