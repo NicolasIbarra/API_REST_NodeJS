@@ -25,7 +25,7 @@ const registerUser = async (req, res) => {
 };
 
 /**
- * Log in an existing user.
+ * Login for an existing user.
  * First the user is retrieved from DB by its email.
  * Second the comparePassword() function is used to verify the entered password.
  * @param {*} req

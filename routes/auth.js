@@ -11,7 +11,7 @@ const router = express.Router();
  *      post:
  *          tags:
  *              - Auth
- *          summary: "Register a new user"
+ *          summary: "Register"
  *          description: "Endpoint to register a new user."
  *          requestBody:
  *              content:
@@ -27,7 +27,28 @@ const router = express.Router();
 router.post("/register", validatorUsersModel, registerUser);
 
 /**
- * Log in an existing user.
+ * Login for an existing user.
+ * @openapi
+ * /auth/login:
+ *      post:
+ *          tags:
+ *              - Auth
+ *          summary: "Log in"
+ *          description: "Endpoint to login of an existing user"
+ *          requestBody:
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: "#/components/schemas/authLogin"
+ *          responses:
+ *              '200': 
+ *                  description: User logged in successfully
+ *              '401':
+ *                  description: Incorrect password
+ *              '403': 
+ *                  description: Validation error
+ *              '404': 
+ *                  description: User not found 
  */
 router.post("/login", validatorLogin, loginUser);
 
