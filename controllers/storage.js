@@ -79,15 +79,9 @@ const deleteFile = async (req, res) => {
     };
     res.send({ data });
   } catch (error) {
+    console.log(error)
     handleHttpError(res, "ERROR_STORAGE_DELETEFILE", 404);
   }
 };
 
-/**
- * Updates file information.
- * @param {*} req
- * @param {*} res
- */
-const updateFile = async (req, res) => {};
-
-module.exports = { getFile, getFiles, uploadFile, deleteFile, updateFile };
+module.exports = { getFile, getFiles, uploadFile, deleteFile };
