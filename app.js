@@ -8,6 +8,7 @@ const { connectMySQLDB } = require("./config/mysql");
 const openApiConfiguration = require("./docs/swagger");
 
 const DB_ENGINE = process.env.DB_ENGINE;
+const NODE_ENV = process.env.NODE_ENV || "development";
 const PORT = process.env.PORT || 3000;
 const APP = express();
 APP.use(cors());
@@ -40,13 +41,18 @@ APP.use(
 APP.use("/api", require("./routes"));
 
 /**
+ * An enviroment control is made because of Jest testing server (supported with cross-env dependency).
  * Listens to localhost connection.
  */
-APP.listen(PORT, () => {
-  console.log("Tu app está escuchando http://localhost:" + PORT);
-});
+if(NODE_ENV !== "test"){
+  APP.listen(PORT, () => {
+    console.log("Tu app está escuchando http://localhost:" + PORT);
+  });
+}
 
 /**
  * Evaluates which DB connect with according to DB_ENGINE constant in .env file.
  */
 DB_ENGINE === "nosql" ? connectMongoDB() : connectMySQLDB();
+
+module.exports = APP;
