@@ -104,7 +104,7 @@ router.get("/:id", validatorId, getFile);
  *                  type: string
  *          responses:
  *              '200': 
- *                  description: File posted successfully
+ *                  description: File deleted successfully
  *              '403': 
  *                  description: Validation error
  *              '404': 

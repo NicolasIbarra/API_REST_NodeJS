@@ -29,7 +29,7 @@ const testAuthRegister = {
     password: "HolaRegister"
 }
 
-describe("[AUTH] This is a test for /auth/login", () => {
+describe("[AUTH] Test for Login", () => {
   test("This should return a 404 http status code", async () => {
     const response = await request(app)
     .post("/api/auth/login")
@@ -39,7 +39,7 @@ describe("[AUTH] This is a test for /auth/login", () => {
   });
 });
 
-describe("[AUTH] This is a test for /auth/register", () => {
+describe("[AUTH] Test for Register", () => {
     test("This should return a 200 http status code", async () => {
       const response = await request(app)
       .post("/api/auth/register")
