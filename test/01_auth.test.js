@@ -1,8 +1,16 @@
 const request = require("supertest");
 const app = require("../app");
+const { usersModel } = require("../models");
 
 /**
- * This is a test in login functionality.
+ * Cleans the Users collection to successfully execute the tests.
+ */
+beforeAll( async () => {
+  await usersModel.deleteMany();
+})
+
+/**
+ * This is a test for Login and Register functionality.
  * Describe() and test() provides a description in case of error.
  * Inside test() -> Is written the code that will be tested. 
  *               -> Is needed the original app module.
