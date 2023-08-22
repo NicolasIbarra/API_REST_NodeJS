@@ -10,7 +10,7 @@ beforeAll( async () => {
 })
 
 /**
- * This is a test for Login and Register functionality.
+ * This is a test for Login and Register functionalities.
  * Describe() and test() provides a description in case of error.
  * Inside test() -> Is written the code that will be tested. 
  *               -> Is needed the original app module.

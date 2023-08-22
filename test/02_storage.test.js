@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require("../app");
 const { signToken } = require("../utils/handleJwt");
 const { usersModel, storageModel } = require("../models");
-const filePath = `${__dirname}/TestFiles/bear.jpeg`;
+const filePath = `${__dirname}/TestFiles/bear.png`;
 
 let jwtToken = "";
 let fileId = "";
