@@ -51,7 +51,7 @@ if(NODE_ENV !== "test"){
 }
 
 /**
- * Evaluates which DB connect with according to DB_ENGINE constant in .env file.
+ * Evaluates which DB connect to according to DB_ENGINE constant in .env file.
  */
 DB_ENGINE === "nosql" ? connectMongoDB() : connectMySQLDB();
 

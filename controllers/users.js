@@ -34,7 +34,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     req = matchedData(req);
-    const user = await usersModel.findOne({email: req.email});
+    const user = await usersModel.findOne({ email: req.email });
     if (!user) {
       handleHttpError(res, "ERROR_USER_NOT_FOUND", 404);
       return;
@@ -55,4 +55,33 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+/**
+ * Gets a single user
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getUserById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await usersModel.findOne({ _id: {$eq: userId} });
+    res.send({ user });
+  } catch (error) {
+    handleHttpError(res, "ERROR_USERS_FINDUSER", 404);
+  }
+};
+
+/**
+ * Gets a list of all the existing users
+ * @param {*} req
+ * @param {*} res
+ */
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await usersModel.find();
+    res.send({ users });
+  } catch (error) {
+    handleHttpError(res, "ERROR_USERS_FINDALLUSERS", 404);
+  }
+};
+
+module.exports = { registerUser, loginUser, getUserById, getAllUsers };
