@@ -1,8 +1,37 @@
 const express = require("express");
-const { getUserById, getAllUsers } = require("../controllers/users");
+const { getUserByEmail, getUserById, getAllUsers } = require("../controllers/users");
 const authSessionMiddleware = require("../middleware/sessionMiddleware");
+const validatorEmail = require("../validators/validatorEmail");
 const validatorId = require("../validators/validatorId");
 const router = express.Router();
+
+/**
+ * Get a single user by email.
+ * @openapi
+ * /users/{email}:
+ *      get:
+ *          tags:
+ *              - Users
+ *          summary: "A single user by email"
+ *          description: "Endpoint to get a single existing user"
+ *          security:
+ *              - bearerAuth: []
+ *          parameters:
+ *          -   name: email
+ *              in: path
+ *              description: Email of the user
+ *              required: true
+ *              schema:
+ *                  type: string
+ *          responses:
+ *              '200':
+ *                  description: User recovered successfully
+ *              '403':
+ *                  description: Validation error
+ *              '404':
+ *                  description: User not found
+ */
+router.get("/:email", authSessionMiddleware, validatorEmail, getUserByEmail);
 
 /**
  * Get a single user by id.
@@ -11,7 +40,7 @@ const router = express.Router();
  *      get:
  *          tags:
  *              - Users
- *          summary: "A single user"
+ *          summary: "A single user by id"
  *          description: "Endpoint to get a single existing user"
  *          security:
  *              - bearerAuth: []
@@ -20,6 +49,8 @@ const router = express.Router();
  *              in: path
  *              description: Identifier of the user
  *              required: true
+ *              schema:
+ *                  type: string
  *          responses:
  *              '200':
  *                  description: User recovered successfully

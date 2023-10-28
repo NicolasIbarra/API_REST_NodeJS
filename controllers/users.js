@@ -34,7 +34,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     req = matchedData(req);
-    const user = await usersModel.findOne({ email: req.email });
+    const user = await usersModel.findOne({ email: { $eq: req.email } });
     if (!user) {
       handleHttpError(res, "ERROR_USER_NOT_FOUND", 404);
       return;
@@ -51,22 +51,38 @@ const loginUser = async (req, res) => {
     };
     res.send({ data });
   } catch (error) {
+    console.log(error);
     handleHttpError(res, "ERROR_USERS_LOGINUSER", 404);
   }
 };
 
 /**
- * Gets a single user
- * @param {*} req 
- * @param {*} res 
+ * Gets a single user by id
+ * @param {*} req
+ * @param {*} res
  */
 const getUserById = async (req, res) => {
   try {
     const userId = req.params.id;
-    const user = await usersModel.findOne({ _id: {$eq: userId} });
+    const user = await usersModel.findOne({ _id: { $eq: userId } });
     res.send({ user });
   } catch (error) {
-    handleHttpError(res, "ERROR_USERS_FINDUSER", 404);
+    handleHttpError(res, "ERROR_USERS_FINDUSERBYID", 404);
+  }
+};
+
+/**
+ * Gets a single user by email
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getUserByEmail = async (req, res) => {
+  try {
+    const userEmail = req.params.email;
+    const user = await usersModel.findOne({ email: { $eq: userEmail } });
+    res.send({ user });
+  } catch (error) {
+    handleHttpError(res, "ERROR_USERS_FINDUSERBYEMAIL", 404);
   }
 };
 
@@ -84,4 +100,4 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, getUserById, getAllUsers };
+module.exports = { registerUser, loginUser, getUserByEmail, getUserById, getAllUsers };
