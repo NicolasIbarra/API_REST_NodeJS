@@ -1,5 +1,5 @@
 const express = require("express");
-const { getUserByEmail, getUserById, getAllUsers } = require("../controllers/users");
+const { deleteUserByEmail, getUserByEmail, getUserById, getAllUsers } = require("../controllers/users");
 const authSessionMiddleware = require("../middleware/sessionMiddleware");
 const validatorEmail = require("../validators/validatorEmail");
 const validatorId = require("../validators/validatorId");
@@ -81,5 +81,33 @@ router.get("/:id", authSessionMiddleware, validatorId, getUserById);
  *                  description: Token not found
  */
 router.get("/", authSessionMiddleware, getAllUsers);
+
+/**
+ * Delete a user by its email.
+ * @openapi
+ * /users/{email}:
+ *      delete:
+ *          tags:
+ *              - Users
+ *          summary: "Delete a user"
+ *          description: "Endpoint to delete a user by its email"
+ *          security:
+ *              - bearerAuth: []
+ *          parameters:
+ *          -   name: email
+ *              in: path
+ *              description: Email of the user
+ *              required: true
+ *              schema:
+ *                  type: string
+ *          responses:
+ *              '200':
+ *                  description: Users recovered successfully
+ *              '403':
+ *                  description: Validation error
+ *              '404':
+ *                  description: Token not found
+ */
+router.delete("/:email", authSessionMiddleware, validatorEmail, deleteUserByEmail);
 
 module.exports = router;

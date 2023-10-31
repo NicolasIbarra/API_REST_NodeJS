@@ -46,7 +46,7 @@ APP.use("/api", require("./routes"));
  */
 if(NODE_ENV !== "test"){
   APP.listen(PORT, () => {
-    console.log("Tu app está escuchando http://localhost:" + PORT);
+    console.log("Tu app está escuchando http://localhost:" + PORT + "/documentation/");
   });
 }
 

@@ -73,8 +73,8 @@ const getUserById = async (req, res) => {
 
 /**
  * Gets a single user by email
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 const getUserByEmail = async (req, res) => {
   try {
@@ -100,4 +100,26 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, getUserByEmail, getUserById, getAllUsers };
+/**
+ * Deletes a single user by its email
+ * @param {*} req 
+ * @param {*} res 
+ */
+const deleteUserByEmail = async (req, res) => {
+  try {
+    const userEmail = req.params.email;
+    const data = await usersModel.deleteOne({ email: userEmail });
+    res.send({ data });
+  } catch (error) {
+    handleHttpError(res, "ERROR_USERS_DELETEUSERBYEMAIL", 404);
+  }
+};
+
+module.exports = {
+  deleteUserByEmail,
+  getAllUsers,
+  getUserByEmail,
+  getUserById,
+  loginUser,
+  registerUser,
+};
