@@ -1,8 +1,9 @@
 const express = require("express");
-const { deleteUserByEmail, getUserByEmail, getUserById, getAllUsers } = require("../controllers/users");
+const { deleteUserByEmail, getUserByEmail, getUserById, getAllUsers, updateUserByEmail } = require("../controllers/users");
 const authSessionMiddleware = require("../middleware/sessionMiddleware");
 const validatorEmail = require("../validators/validatorEmail");
 const validatorId = require("../validators/validatorId");
+const { validatorUsersModel } = require("../validators/validatorModel");
 const router = express.Router();
 
 /**
@@ -109,5 +110,33 @@ router.get("/", authSessionMiddleware, getAllUsers);
  *                  description: Token not found
  */
 router.delete("/:email", authSessionMiddleware, validatorEmail, deleteUserByEmail);
+
+/**
+ * Update one particular user
+ * @openapi
+ * /users/updateUserByEmail:
+ *      put:
+ *          tags:
+ *              - Users
+ *          summary: "Update user"
+ *          description: "Endpoint to update one particular user by its email"
+ *          security:
+ *              - bearerAuth: []
+ *          requestBody:
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: "#/components/schemas/users"
+ *          responses:
+ *              '200':
+ *                  description: User updated successfully
+ *              '400':
+ *                  description: Bad request
+ *              '403':
+ *                  description: Validation error
+ *              '404':
+ *                  description: Token or track not found
+ */
+router.put("/updateUserByEmail", authSessionMiddleware, validatorEmail, validatorUsersModel, updateUserByEmail);
 
 module.exports = router;

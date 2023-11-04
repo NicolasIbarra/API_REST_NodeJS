@@ -101,9 +101,25 @@ const getAllUsers = async (req, res) => {
 };
 
 /**
- * Deletes a single user by its email
+ * Updates a user by its email.
  * @param {*} req 
  * @param {*} res 
+ */
+const updateUserByEmail = async (req, res) => {
+  try {
+    const body = matchedData(req);
+    const data = await usersModel.findOneAndUpdate({"email": req.params.email}, body, {returnDocument: "after"})
+    res.send({data});
+  } catch (error) {
+    console.log(error)
+    handleHttpError(res, "ERROR_USERS_UPDATEUSERSBYEMAIL", 404);
+  }
+};
+
+/**
+ * Deletes a single user by its email
+ * @param {*} req
+ * @param {*} res
  */
 const deleteUserByEmail = async (req, res) => {
   try {
@@ -122,4 +138,5 @@ module.exports = {
   getUserById,
   loginUser,
   registerUser,
+  updateUserByEmail
 };
