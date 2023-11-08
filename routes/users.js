@@ -137,6 +137,6 @@ router.delete("/:email", authSessionMiddleware, validatorEmail, deleteUserByEmai
  *              '404':
  *                  description: Token or track not found
  */
-router.put("/updateUserByEmail", authSessionMiddleware, validatorEmail, validatorUsersModel, updateUserByEmail);
+router.put("/updateUserByEmail", authSessionMiddleware, validatorUsersModel, updateUserByEmail);
 
 module.exports = router;

@@ -29,6 +29,7 @@ const validatorUsersModel = [
   check("age").exists().notEmpty().isNumeric(),
   check("email").exists().notEmpty().isEmail(),
   check("password").exists().notEmpty().isLength({ min: 3, max: 50 }),
+  check("role").exists().notEmpty().isArray(),
   (req, res, next) => validateResult(req, res, next),
 ];
 

@@ -101,7 +101,7 @@ const swaggerDefinition = {
             type:"string"
           },
           role:{
-            type:"object",
+            type:"array",
             required:[""],
             properties:{
               user:{

@@ -107,8 +107,10 @@ const getAllUsers = async (req, res) => {
  */
 const updateUserByEmail = async (req, res) => {
   try {
-    const body = matchedData(req);
-    const data = await usersModel.findOneAndUpdate({"email": req.params.email}, body, {returnDocument: "after"})
+    req = matchedData(req);
+    const hashedPassword = await encryptPassword(req.password);
+    const body = { ...req, password: hashedPassword };
+    const data = await usersModel.findOneAndUpdate({ email: body.email }, body, { new: true });
     res.send({data});
   } catch (error) {
     console.log(error)
