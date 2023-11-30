@@ -13,7 +13,7 @@ const MEDIA_PATH = `${__dirname}/../storage`;
 const getFile = async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await storageModel.findOne({id});
+    const data = await storageModel.findOne({ _id: { $eq: id }});
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_STORAGE_GETFILE", 404);

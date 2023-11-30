@@ -12,8 +12,8 @@ const propertiesKey = getPropertiesKey();
  */
 const getItem = async (req, res) => {
   try {
-    const id = req.params.id;
-    const data = await tracksModel.findOneData(id);
+    const itemId = req.params.id;
+    const data = await tracksModel.findOne({ _id: {$eq: itemId } });
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_TRACKS_GETITEM", 404);
@@ -27,7 +27,7 @@ const getItem = async (req, res) => {
  */
 const getItems = async (req, res) => {
   try {
-    const data = await tracksModel.findAllData();
+    const data = await tracksModel.find();
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_TRACKS_GETITEMS", 404);
@@ -60,8 +60,9 @@ const createItems = async (req, res) => {
  */
 const updateItems = async (req, res) => {
   try {
-    const body = matchedData(req);
-    const data = await tracksModel.findOneAndUpdate({mediaId:body.mediaId}, body, { update: true });
+    req = matchedData(req);
+    const body = {...req};
+    const data = await tracksModel.findOneAndUpdate({ _id: body.id }, body, { new: true });
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_TRACKS_UPDATEITEMS", 404);

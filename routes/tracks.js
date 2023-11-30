@@ -56,7 +56,7 @@ router.get("/", authSessionMiddleware, getItems);
 router.get("/:id", authSessionMiddleware, validatorId, getItem);
 
 /**
- * Update one particular track. NOT WORKING in Swagger
+ * Update one particular track.
  * @openapi
  * /tracks/{id}:
  *      put:

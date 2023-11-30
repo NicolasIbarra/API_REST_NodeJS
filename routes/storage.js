@@ -57,7 +57,7 @@ router.post("/", uploadMiddleware.single("myFile"), uploadFile);
 router.get("/", getFiles);
 
 /**
- * Get a particular file from DB. NOT WORKING for now.
+ * Get a particular file from DB.
  * @openapi
  * /storage/{id}:
  *      get:
