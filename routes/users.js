@@ -9,7 +9,7 @@ const router = express.Router();
 /**
  * Get a single user by email.
  * @openapi
- * /users/{email}:
+ * /users/getUserByEmail/{email}:
  *      get:
  *          tags:
  *              - Users
@@ -32,12 +32,12 @@ const router = express.Router();
  *              '404':
  *                  description: User not found
  */
-router.get("/:email", authSessionMiddleware, validatorEmail, getUserByEmail);
+router.get("/getUserByEmail/:email", authSessionMiddleware, validatorEmail, getUserByEmail);
 
 /**
  * Get a single user by id.
  * @openapi
- * /users/{id}:
+ * /users/getUserById/{id}:
  *      get:
  *          tags:
  *              - Users
@@ -60,7 +60,7 @@ router.get("/:email", authSessionMiddleware, validatorEmail, getUserByEmail);
  *              '404':
  *                  description: User not found
  */
-router.get("/:id", authSessionMiddleware, validatorId, getUserById);
+router.get("/getUserById/:id", authSessionMiddleware, validatorId, getUserById);
 
 /**
  * Get all users existing in DB.

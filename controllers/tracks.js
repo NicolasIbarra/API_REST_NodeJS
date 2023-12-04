@@ -1,8 +1,6 @@
 const { matchedData } = require("express-validator");
-const { tracksModel } = require("../models");
+const { tracksServices } = require("../services/index");
 const { handleHttpError } = require("../utils/handleErrors");
-const getPropertiesKey = require("../utils/handleEngineProperties");
-const propertiesKey = getPropertiesKey();
 
 /**
  * Gets an item.
@@ -13,7 +11,7 @@ const propertiesKey = getPropertiesKey();
 const getItem = async (req, res) => {
   try {
     const itemId = req.params.id;
-    const data = await tracksModel.findOne({ _id: {$eq: itemId } });
+    const data = await tracksServices.findOneById(itemId);
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_TRACKS_GETITEM", 404);
@@ -27,7 +25,7 @@ const getItem = async (req, res) => {
  */
 const getItems = async (req, res) => {
   try {
-    const data = await tracksModel.find();
+    const data = await tracksServices.findAll();
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_TRACKS_GETITEMS", 404);
@@ -44,7 +42,7 @@ const getItems = async (req, res) => {
 const createItems = async (req, res) => {
   try {
     const body = matchedData(req);
-    const data = await tracksModel.create(body); //Check for all CRUD controllers methods. They may change when using Sequelize for SQL DB.
+    const data = await tracksServices.createTrack(body); //Check for all CRUD controllers methods. They may change when using Sequelize for SQL DB.
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_TRACKS_CREATEITEMS", 404);
@@ -62,7 +60,7 @@ const updateItems = async (req, res) => {
   try {
     req = matchedData(req);
     const body = {...req};
-    const data = await tracksModel.findOneAndUpdate({ _id: body.id }, body, { new: true });
+    const data = await tracksServices.updateOneById(body);
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_TRACKS_UPDATEITEMS", 404);
@@ -77,7 +75,7 @@ const updateItems = async (req, res) => {
 const deleteItems = async (req, res) => {
   try {
     const id = req.params.id;
-    const data = await tracksModel.delete({ [propertiesKey.id]: id });
+    const data = await tracksServices.deleteTrack(id);
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_TRACKS_DELETEITEM", 404);

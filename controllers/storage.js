@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { storageModel } = require("../models/index");
+const { storageServices } = require("../services/index");
 const { handleHttpError } = require("../utils/handleErrors");
 const { matchedData } = require("express-validator");
 const PUBLIC_URL = process.env.PUBLIC_URL;
@@ -13,7 +13,7 @@ const MEDIA_PATH = `${__dirname}/../storage`;
 const getFile = async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await storageModel.findOne({ _id: { $eq: id }});
+    const data = await storageServices.findOneById(id);
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_STORAGE_GETFILE", 404);
@@ -27,7 +27,7 @@ const getFile = async (req, res) => {
 */
 const getFiles = async (req, res) => {
   try {
-    const files = await storageModel.find({});
+    const files = await storageServices.findAll();
     res.send({ files });
   } catch (error) {
     handleHttpError(res, "ERROR_STORAGE_GETFILES", 404);
@@ -49,7 +49,7 @@ const uploadFile = async (req, res) => {
       url: `${PUBLIC_URL}/${file.filename}`,
       filename: file.filename,
     };
-    const data = await storageModel.create(fileData);
+    const data = await storageServices.createFile(fileData);
     res.send({ data: data });
   } catch (error) {
     handleHttpError(res, "ERROR_STORAGE_UPLOADFILE", 404);
@@ -68,8 +68,8 @@ const uploadFile = async (req, res) => {
 const deleteFile = async (req, res) => {
   try {
     const { id } = matchedData(req);
-    const fileData = await storageModel.findOne({id});
-    await storageModel.findByIdAndDelete(id);
+    const fileData = await storageServices.findOneById(id);
+    await storageServices.deleteFile(id);
     const { filename } = fileData;
     const filePath = `${MEDIA_PATH}/${filename}`;
     fs.unlinkSync(filePath);
@@ -79,7 +79,6 @@ const deleteFile = async (req, res) => {
     };
     res.send({ data });
   } catch (error) {
-    console.log(error)
     handleHttpError(res, "ERROR_STORAGE_DELETEFILE", 404);
   }
 };

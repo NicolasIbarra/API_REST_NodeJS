@@ -1,6 +1,6 @@
 const getPropertiesKey = require("../utils/handleEngineProperties");
 const { handleHttpError } = require("../utils/handleErrors");
-const { usersModel } = require("../models");
+const { usersServices } = require("../services/index");
 const { verifyToken } = require("../utils/handleJwt");
 const propertiesKey = getPropertiesKey();
 
@@ -33,7 +33,7 @@ const authSessionMiddleware = async (req, res, next) => {
       [propertiesKey.id]: dataToken[propertiesKey.id],
     };
 
-    const user = await usersModel.findOne(query); //This should be a microservice.
+    const user = await usersServices.findOneById(query[propertiesKey.id]); 
     req.user = user;
     next();
 

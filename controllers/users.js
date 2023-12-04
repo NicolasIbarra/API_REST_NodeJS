@@ -2,7 +2,7 @@ const { matchedData } = require("express-validator");
 const { encryptPassword, comparePassword } = require("../utils/handlePassword");
 const { handleHttpError } = require("../utils/handleErrors");
 const { signToken } = require("../utils/handleJwt");
-const { usersModel } = require("../models");
+const { usersServices } = require("../services/index");
 
 /**
  * Register a new user.
@@ -17,7 +17,7 @@ const registerUser = async (req, res) => {
     req = matchedData(req);
     const hashedPassword = await encryptPassword(req.password);
     const body = { ...req, password: hashedPassword };
-    const dataUser = await usersModel.create(body);
+    const dataUser = await usersServices.createUser(body);
     res.send({ dataUser });
   } catch (error) {
     handleHttpError(res, "ERROR_USERS_REGISTERUSER", 404);
@@ -34,7 +34,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     req = matchedData(req);
-    const user = await usersModel.findOne({ email: { $eq: req.email } });
+    const user = await usersServices.findOneByEmail(req.email);
     if (!user) {
       handleHttpError(res, "ERROR_USER_NOT_FOUND", 404);
       return;
@@ -51,7 +51,6 @@ const loginUser = async (req, res) => {
     };
     res.send({ data });
   } catch (error) {
-    console.log(error);
     handleHttpError(res, "ERROR_USERS_LOGINUSER", 404);
   }
 };
@@ -64,7 +63,7 @@ const loginUser = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const userId = req.params.id;
-    const user = await usersModel.findOne({ _id: { $eq: userId } });
+    const user = await usersServices.findOneById(userId);
     res.send({ user });
   } catch (error) {
     handleHttpError(res, "ERROR_USERS_FINDUSERBYID", 404);
@@ -79,7 +78,7 @@ const getUserById = async (req, res) => {
 const getUserByEmail = async (req, res) => {
   try {
     const userEmail = req.params.email;
-    const user = await usersModel.findOne({ email: { $eq: userEmail } });
+    const user = await usersServices.findOneByEmail(userEmail);
     res.send({ user });
   } catch (error) {
     handleHttpError(res, "ERROR_USERS_FINDUSERBYEMAIL", 404);
@@ -93,7 +92,7 @@ const getUserByEmail = async (req, res) => {
  */
 const getAllUsers = async (req, res) => {
   try {
-    const users = await usersModel.find();
+    const users = await usersServices.findAll();
     res.send({ users });
   } catch (error) {
     handleHttpError(res, "ERROR_USERS_FINDALLUSERS", 404);
@@ -110,10 +109,9 @@ const updateUserByEmail = async (req, res) => {
     req = matchedData(req);
     const hashedPassword = await encryptPassword(req.password);
     const body = { ...req, password: hashedPassword };
-    const data = await usersModel.findOneAndUpdate({ email: body.email }, body, { new: true });
+    const data = await usersServices.updateOneByEmail(body);
     res.send({data});
   } catch (error) {
-    console.log(error)
     handleHttpError(res, "ERROR_USERS_UPDATEUSERSBYEMAIL", 404);
   }
 };
@@ -126,7 +124,7 @@ const updateUserByEmail = async (req, res) => {
 const deleteUserByEmail = async (req, res) => {
   try {
     const userEmail = req.params.email;
-    const data = await usersModel.deleteOne({ email: userEmail });
+    const data = await usersServices.deleteUser(userEmail);
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_USERS_DELETEUSERBYEMAIL", 404);
