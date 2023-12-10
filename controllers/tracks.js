@@ -42,7 +42,7 @@ const getItems = async (req, res) => {
 const createItems = async (req, res) => {
   try {
     const body = matchedData(req);
-    const data = await tracksServices.createTrack(body); //Check for all CRUD controllers methods. They may change when using Sequelize for SQL DB.
+    const data = await tracksServices.createTrack(body); 
     res.send({ data });
   } catch (error) {
     handleHttpError(res, "ERROR_TRACKS_CREATEITEMS", 404);
